@@ -20,6 +20,30 @@ public class Professor extends Pessoa{
         this.salario = salario;
         this.materia = materia;
     }
+
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    public String getMateria() {
+        return materia;
+    }
+
+    public void setMateria(String materia) {
+        this.materia = materia;
+    }
+
+    
+    
+    @Override
+    public String toString() {
+        return super.toString() + " | Salário: " + salario + "; Materia: "+ materia; 
+    }
+    
     
     
 }

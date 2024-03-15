@@ -44,6 +44,11 @@ public class Pessoa {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
+
+    @Override
+    public String toString() {
+        return "Pessoa{" + cpf + "; " + nome + "; " + endereco + '}';
+    }
     
     
 }

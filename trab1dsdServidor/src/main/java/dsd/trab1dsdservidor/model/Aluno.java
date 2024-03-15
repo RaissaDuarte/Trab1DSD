@@ -23,8 +23,12 @@ public class Aluno extends Pessoa {
     public void setTurma(String turma) {
         this.turma = turma;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return super.toString() + " | Turma: " + turma;
+    }
+
     
     
 }

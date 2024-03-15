@@ -13,27 +13,27 @@ import java.util.List;
  * @author 08168578902
  */
 public class AlunoRepositorio {
-    private List<Aluno> bancoDeDados;
+    private List<Aluno> alunoslist;
 
     public AlunoRepositorio() {
-        bancoDeDados = new ArrayList<>();
+        alunoslist = new ArrayList<>();
     }
 
     public void add(Aluno aluno) {
-        bancoDeDados.add(aluno);
+        alunoslist.add(aluno);
     }
 
     public void excluir(String cpf) {
-        for (int i = 0; i < bancoDeDados.size(); i++) {
-            if (bancoDeDados.get(i).getCpf().equals(cpf)) {
-                bancoDeDados.remove(i);
+        for (int i = 0; i < alunoslist.size(); i++) {
+            if (alunoslist.get(i).getCpf().equals(cpf)) {
+                alunoslist.remove(i);
                 return;
             }
         }
     }
 
     public void editar(String cpf, String novoNome, String novoEndereco, String novaTurma) {
-        for (Aluno aluno : bancoDeDados) {
+        for (Aluno aluno : alunoslist) {
             if (aluno.getCpf().equals(cpf)) {
                 aluno.setNome(novoNome);
                 aluno.setEndereco(novoEndereco);
@@ -43,14 +43,14 @@ public class AlunoRepositorio {
         }
     }
 
-    public List<Aluno> listar() {
-        return new ArrayList<>(bancoDeDados);
+    public List<Aluno> listarTodosAlunos() {
+        return alunoslist;
     }
 
-    public Aluno get(String cpf) {
-        for (Aluno aluno : bancoDeDados) {
+    public String get(String cpf) {
+        for (Aluno aluno : alunoslist) {
             if (aluno.getCpf().equals(cpf)) {
-                return aluno;
+                return aluno.toString();
             }
         }
         return null;

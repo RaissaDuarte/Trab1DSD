@@ -26,28 +26,37 @@ public class ClienteMain {
         
         try {
             
-            conexao = new Socket("10.15.120.36", 2456);
+            conexao = new Socket("10.15.120.36", 6543);
             System.out.println("Conexao estabelecida");
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
 
             while (true) {
-                System.out.println("Olá, seja bem vindo ao sistema Hickmann");
-                System.out.println("Qual objeto voce gostaria de manipular?" + "\n" + "1 - Escola" +
-                "\n" + "2 - Pessoa");
-            
-            //seleção do objeto 
-            int objeto = 2;
-            switch (scan) {
-                Case "1" :
-                    
+                System.out.println("Olá, seja bem vindo!!!");
+                System.out.println("Aguardando mensagem...");
+                String msgRecebida = in.readLine();
+                
+                System.out.println("Mensgem recebida: " + msgRecebida);
+                
+                System.out.println("Digite: 1 - para manipular Aluno, 2 - para manipular Professor, 3 - para manipular Escola");
+                System.out.println("Digite 'exit' para sair");
+                
+                String msgEnviar = scan.nextLine();
+
+                if(msgEnviar.equals("exit")){
+                    System.out.println("Conexão Encerrada...");
+                    break;
+                }
+                out.println(msgEnviar);        
             }
-            
-            
-        } catch (Exception e) {
-            System.out.println("Deu exception");
+        } catch(Exception e) {
+            System.out.println("Deu Exception");
             e.printStackTrace();
+        } finally {
+            if (conexao != null){
+                conexao.close();
+                System.out.println("Socket Encerrado...");
+            }
         }
-        
     }
 }

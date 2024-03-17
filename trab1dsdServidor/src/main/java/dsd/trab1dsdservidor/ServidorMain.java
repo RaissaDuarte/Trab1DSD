@@ -50,11 +50,8 @@ public class ServidorMain {
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
 
             //le qual objeto quer manipular - 1 aluno, 2 professor, 3 escola
-            System.out.println("Digite: "
-                    + "\n" + "1 - para manipular Aluno"
-                    + "\n" + "2 - para manipular Professor"
-                    + "\n" + "3 - para manipular Escola");
-            String msgObjeto = scan.nextLine();
+            String msgObjeto = "Digite: 1 - para manipular Aluno, 2 - para manipular Professor, 3 - para manipular Escola";
+            out.println(msgObjeto);
 
             while (!msgObjeto.equals("exit")) {
                 out.println(msgObjeto);
@@ -66,7 +63,38 @@ public class ServidorMain {
                     break;
                 }
 
-                opcoesManipulacaoObjeto(msgRecebida);
+                switch (msgRecebida) {
+                    case "1":
+                        out.println("Manipulação de Aluno CONFIRMADA: ");
+                        out.println("Selecione um dos Comandos: "
+                                + "\n" + "INSERT"
+                                + "\n" + "UPDATE"
+                                + "\n" + "GET"
+                                + "\n" + "DELETE"
+                                + "\n" + "LIST");
+                        break;
+                    case "2":
+                        out.println("Manipulação de Professor CONFIRMADA: ");
+                        System.out.println("Manipulação de Professor...");
+                        System.out.println("Selecione um dos Comandos: "
+                                + "\n" + "INSERT"
+                                + "\n" + "UPDATE"
+                                + "\n" + "GET"
+                                + "\n" + "DELETE"
+                                + "\n" + "LIST");
+                        break;
+                    case "3":
+                        out.println("Manipulação de Escola CONFIRMADA: ");
+                        System.out.println("Manipulação de Escola...");
+                        System.out.println("Selecione um dos Comandos: "
+                                + "\n" + "INSERT"
+                                + "\n" + "UPDATE"
+                                + "\n" + "GET"
+                                + "\n" + "DELETE"
+                                + "\n" + "LIST");
+                        break;
+
+                }
             }
 
         } catch (Exception e) {
@@ -107,39 +135,6 @@ public class ServidorMain {
             case "LIST":
 
                 break;
-        }
-    }
-    
-    public static void opcoesManipulacaoObjeto(String opcaoObjeto) {
-        switch (opcaoObjeto) {
-            case "1":
-                System.out.println("Manipulação de Aluno...");
-                System.out.println("Selecione um dos Comandos: "
-                        + "\n" + "INSERT"
-                        + "\n" + "UPDATE"
-                        + "\n" + "GET"
-                        + "\n" + "DELETE"
-                        + "\n" + "LIST");
-                break;
-            case "2":
-                System.out.println("Manipulação de Professor...");
-                System.out.println("Selecione um dos Comandos: "
-                        + "\n" + "INSERT"
-                        + "\n" + "UPDATE"
-                        + "\n" + "GET"
-                        + "\n" + "DELETE"
-                        + "\n" + "LIST");
-                break;
-            case "3":
-                System.out.println("Manipulação de Escola...");
-                System.out.println("Selecione um dos Comandos: "
-                        + "\n" + "INSERT"
-                        + "\n" + "UPDATE"
-                        + "\n" + "GET"
-                        + "\n" + "DELETE"
-                        + "\n" + "LIST");
-                break;
-
         }
     }
 }

@@ -4,6 +4,9 @@
 
 package dsd.trab1dsdservidor;
 
+import dsd.trab1dsdservidor.model.Aluno;
+import dsd.trab1dsdservidor.model.Pessoa;
+import dsd.trab1dsdservidor.repositorio.AlunoRepositorio;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -69,24 +72,33 @@ public class ServidorMain {
     
         public static void crudAluno(String dadosAluno) {
             
-            //separa a mensagem = "insert"; cpf; nome; endereço; 
+            //separa a mensagem = "insert"; cpf; nome; endereço; turma 
             String[] parteMensagem = dadosAluno.split(";");
             
             String comando = parteMensagem[0].trim();
-            String cpf = partesMensagem
             
+            AlunoRepositorio alunoRepositorio = new AlunoRepositorio();
             
-            
-            
-            //separa o resto que é os dados
-            int ind = mensagem.indexOf(';');
-            String dados = mensagem.substring(ind + 1).trim();
-            
-            switch (opComando) {
+            switch (comando) {
                 case "INSERT":
+                    String cpf = parteMensagem[1].trim();
+                    String nome = parteMensagem[2].trim();
+                    String endereco = parteMensagem[3].trim();
+                    String turma = parteMensagem[4].trim();
+                    Aluno aluno = new Aluno (cpf, nome, endereco, turma);
+                    alunoRepositorio.add(aluno);
+                break;
+                
+                case "UPDATE":
                     
                 break;
                 
+                case "GET":
+                    
+                break;
+                case "DELETE":
+                    
+                break;
                 case "LIST":
                     
                 break;

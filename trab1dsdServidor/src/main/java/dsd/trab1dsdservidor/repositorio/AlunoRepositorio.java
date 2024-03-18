@@ -13,7 +13,7 @@ import java.util.List;
  * @author 08168578902
  */
 public class AlunoRepositorio {
-    private List<Aluno> alunoslist;
+    private List<Aluno> alunoslist ;
 
     public AlunoRepositorio() {
         alunoslist = new ArrayList<>();

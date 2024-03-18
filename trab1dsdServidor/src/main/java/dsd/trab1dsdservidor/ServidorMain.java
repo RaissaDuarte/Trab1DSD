@@ -23,11 +23,11 @@ import java.util.Scanner;
  */
 public class ServidorMain {
 
-    //listas bd
-    public static List<String> pessoasList = new ArrayList<>();
+    
 
     public static void main(String[] args) throws IOException {
 
+        AlunoRepositorio alunoRepositorio = new AlunoRepositorio();
         EscolaRepositorio escolaRep = new EscolaRepositorio();
 
         //inicia servidor 
@@ -57,7 +57,7 @@ public class ServidorMain {
                 case "1":
                     out.println("Objeto aluno selecionado");
                     String mensagem = in.readLine();
-                    crudAluno(mensagem, out);
+                    crudAluno(mensagem, out, alunoRepositorio);
                 break;
                 
                 case "3":
@@ -89,14 +89,13 @@ public class ServidorMain {
         }
     }
 
-    public static void crudAluno(String dadosAluno, PrintWriter out) {
+    public static void crudAluno(String dadosAluno, PrintWriter out, AlunoRepositorio alunoRepositorio) {
 
         //separa a mensagem = "insert"; cpf; nome; endereço; turma 
         String[] parteMensagem = dadosAluno.split(";");
 
         String comando = parteMensagem[0].trim();
 
-        AlunoRepositorio alunoRepositorio = new AlunoRepositorio();
 
         switch (comando) {
             case "INSERT":
@@ -106,7 +105,7 @@ public class ServidorMain {
                 String turma = parteMensagem[4].trim();
                 Aluno aluno = new Aluno(cpf, nome, endereco, turma);
                 alunoRepositorio.add(aluno);
-                System.out.println("Aluno cadastrado com sucesso: "+aluno.toString());
+                out.println("Aluno cadastrado com sucesso: "+aluno.toString());
                break;
 
             case "UPDATE":
@@ -115,9 +114,9 @@ public class ServidorMain {
                 String enderecoup = parteMensagem[3].trim();
                 String turmaup = parteMensagem[4].trim();
                 boolean update = alunoRepositorio.editar(cpfup, nomeup, enderecoup, turmaup);
-                if(update)
-                    out.println("Aluno atualizada com sucesso");
-                out.println("Aluno não encontrada");
+                if(update){
+                    out.println("Aluno atualizado com sucesso");
+                }else {out.println("Aluno não encontrado");}
                 break;
 
             case "GET":
@@ -140,9 +139,9 @@ public class ServidorMain {
                 break;
                 
             case "LIST":
-                alunoRepositorio.listarTodosAlunos();
-                
-                break;
+                out.println(alunoRepositorio.listarTodosAlunos());
+                System.out.println(alunoRepositorio.listarTodosAlunos());  
+            break;
         }
     }
 }

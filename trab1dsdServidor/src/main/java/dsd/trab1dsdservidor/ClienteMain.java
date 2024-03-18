@@ -26,13 +26,14 @@ public class ClienteMain {
         
         try {
             
-            conexao = new Socket("10.15.120.36", 6543);
+            conexao = new Socket("10.15.120.73", 6543);
             System.out.println("Conexao estabelecida");
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
-
+            
+            System.out.println("Olá, seja bem vindo!!!");
             while (true) {
-                System.out.println("Olá, seja bem vindo!!!");
+                
 //                System.out.println("Aguardando mensagem...");
                 //String msgRecebida = in.readLine();
                 
@@ -53,7 +54,7 @@ public class ClienteMain {
 
             switch (objeto) {
                 case "1":
-                    out.println(scan);
+                    out.println(objeto);
                     String retorno = in.readLine();
                     System.out.println(retorno);
                     crudAluno(out, scan);
@@ -106,19 +107,19 @@ public class ClienteMain {
                     String enderecoup = scan.nextLine();
                     System.out.println("Insira a nova turma");
                     String turmaup = scan.nextLine();
-                    out.println("UPDATE"+cpfup+";"+nomeup+";"+enderecoup+";"+turmaup);
+                    out.println("UPDATE;"+cpfup+";"+nomeup+";"+enderecoup+";"+turmaup);
                 break;
                 
                 case "3":
                     System.out.println("Digite o cpf do aluno que voce deseja pesquisar");
                     String cpfget = scan.nextLine();
-                    out.println("GET"+cpfget);
+                    out.println("GET;"+cpfget);
                 break;
                 
                 case "4": 
                     System.out.println("Insira o cpf do aluno que voce deseja excluir");
                     String cpfdel = scan.nextLine();
-                    out.println("DELETE"+cpfdel);
+                    out.println("DELETE;"+cpfdel);
                 break;
                 
                 case "5":

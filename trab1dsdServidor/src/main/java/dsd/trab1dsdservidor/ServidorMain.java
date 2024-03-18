@@ -58,7 +58,6 @@ public class ServidorMain {
                     out.println("Objeto aluno selecionado");
                     String mensagem = in.readLine();
                     crudAluno(mensagem, out);
-                    System.out.println("aluno cadastrado");
                 break;
                 
                 case "3":
@@ -107,24 +106,42 @@ public class ServidorMain {
                 String turma = parteMensagem[4].trim();
                 Aluno aluno = new Aluno(cpf, nome, endereco, turma);
                 alunoRepositorio.add(aluno);
-                System.out.println("cheguei aqui"+aluno.toString());
+                System.out.println("Aluno cadastrado com sucesso: "+aluno.toString());
                break;
 
             case "UPDATE":
-
+                String cpfup = parteMensagem[1].trim();
+                String nomeup = parteMensagem[2].trim();
+                String enderecoup = parteMensagem[3].trim();
+                String turmaup = parteMensagem[4].trim();
+                boolean update = alunoRepositorio.editar(cpfup, nomeup, enderecoup, turmaup);
+                if(update)
+                    out.println("Aluno atualizada com sucesso");
+                out.println("Aluno não encontrada");
                 break;
 
             case "GET":
-
+                String cpfget = parteMensagem[1].trim();
+                String a = alunoRepositorio.get(cpfget);
+                out.println(a);
+                if(alunoRepositorio.listarTodosAlunos().isEmpty())
+                    out.println("Sem alunos cadastrados");
+                out.println("Aluno nao encontrado");
                 break;
+                
             case "DELETE":
-
+                String cpfdel = parteMensagem[1].trim();
+                if(alunoRepositorio.listarTodosAlunos().isEmpty())
+                    out.println("Sem alunos cadastrados");
+                boolean del = alunoRepositorio.excluir(cpfdel);
+                if (del)
+                    out.println("Aluno removido com sucesso");
+                out.println("Aluno nao encontrado");
                 break;
+                
             case "LIST":
-                List<Aluno> alunos = alunoRepositorio.listarTodosAlunos();
-                for (Aluno a : alunos) {
-                    out.println(a.toString());
-                }
+                alunoRepositorio.listarTodosAlunos();
+                
                 break;
         }
     }

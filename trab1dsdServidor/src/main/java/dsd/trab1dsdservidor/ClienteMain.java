@@ -34,12 +34,12 @@ public class ClienteMain {
             while (true) {
                 System.out.println("Olá, seja bem vindo!!!");
 //                System.out.println("Aguardando mensagem...");
-                String msgRecebida = in.readLine();
+                //String msgRecebida = in.readLine();
                 
-                System.out.println("Mensgem recebida: " + msgRecebida);
+                //System.out.println("Mensgem recebida: " + msgRecebida);
                 
-                System.out.println("Qual objeto voce gostaria de manipular?" + "\n" + "1 - Escola" +
-                "\n" + "2 - Aluno"+ "\n" + "3 - Professor");
+                System.out.println("Qual objeto voce gostaria de manipular?" + "\n" + "1 - Aluno" +
+                "\n" + "2 - Professor"+ "\n" + "3 - Escola");
 //                System.out.println("Digite: 1 - para manipular Aluno, 2 - para manipular Professor, 3 - para manipular Escola");
 //                System.out.println("Digite 'exit' para sair");
 //                
@@ -54,9 +54,10 @@ public class ClienteMain {
             switch (objeto) {
                 case "1":
                     out.println(scan);
-                    in.readLine();
+                    String retorno = in.readLine();
+                    System.out.println(retorno);
                     crudAluno(out, scan);
-                    
+                    System.out.println(in.readLine());                    
                 break;
             }
 
@@ -95,6 +96,36 @@ public class ClienteMain {
                     String turma = scan.nextLine();
                     out.println("INSERT;"+cpf+";"+nome+";"+endereco+";"+turma);
                 break;
+                
+                case "2":
+                    System.out.println("Insira o CPF do aluno que voce quer alterar");
+                    String cpfup = scan.nextLine();
+                    System.out.println("Insira o novo nome");
+                    String nomeup = scan.nextLine();
+                    System.out.println("Insira o novo endereço");
+                    String enderecoup = scan.nextLine();
+                    System.out.println("Insira a nova turma");
+                    String turmaup = scan.nextLine();
+                    out.println("UPDATE"+cpfup+";"+nomeup+";"+enderecoup+";"+turmaup);
+                break;
+                
+                case "3":
+                    System.out.println("Digite o cpf do aluno que voce deseja pesquisar");
+                    String cpfget = scan.nextLine();
+                    out.println("GET"+cpfget);
+                break;
+                
+                case "4": 
+                    System.out.println("Insira o cpf do aluno que voce deseja excluir");
+                    String cpfdel = scan.nextLine();
+                    out.println("DELETE"+cpfdel);
+                break;
+                
+                case "5":
+                    out.println("LIST");
+                break;
+                
+                
                     
             } 
     }

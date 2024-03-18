@@ -23,24 +23,25 @@ public class AlunoRepositorio {
         alunoslist.add(aluno);
     }
 
-    public void excluir(String cpf) {
+    public boolean excluir(String cpf) {
         for (int i = 0; i < alunoslist.size(); i++) {
             if (alunoslist.get(i).getCpf().equals(cpf)) {
                 alunoslist.remove(i);
-                return;
+                return true;
             }
-        }
+        }return false;
     }
 
-    public void editar(String cpf, String novoNome, String novoEndereco, String novaTurma) {
+    public boolean editar(String cpf, String novoNome, String novoEndereco, String novaTurma) {
         for (Aluno aluno : alunoslist) {
             if (aluno.getCpf().equals(cpf)) {
                 aluno.setNome(novoNome);
                 aluno.setEndereco(novoEndereco);
                 aluno.setTurma(novaTurma);
-                return;
+                return true;
             }
-        }
+            
+        }return false;
     }
 
     public List<Aluno> listarTodosAlunos() {

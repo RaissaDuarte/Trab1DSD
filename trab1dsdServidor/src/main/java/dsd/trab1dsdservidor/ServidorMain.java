@@ -38,7 +38,8 @@ public class ServidorMain {
         scan.useDelimiter("\n");
 
         Socket conexao = null;
-
+        String finaliza = "";
+       
         try {
             //aguarda conexao
             System.out.println("Servidor iniciado, aguardando conexao");
@@ -49,41 +50,18 @@ public class ServidorMain {
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
 
+            while (!finaliza.equals("exit")){
             //le qual objeto quer manipular - 1 aluno, 2 professor, 3 escola
-            String msgObjeto = "Digite: 1 - para manipular Aluno, 2 - para manipular Professor, 3 - para manipular Escola";
-            out.println(msgObjeto);
-
-            while (!msgObjeto.equals("exit")) {
-                out.println(msgObjeto);
-
-                System.out.println("Aguardando mensagem...");
-                String msgRecebida = in.readLine();
-                if (msgRecebida == null) {
-                    System.out.println("Chat encerrado pelo outro usuário.");
-                    break;
-                }
-
-                switch (msgRecebida) {
-                    case "1":
-                        out.println("Manipulação de Aluno CONFIRMADA: ");
-                        out.println("Selecione um dos Comandos: "
-                                + "\n" + "INSERT"
-                                + "\n" + "UPDATE"
-                                + "\n" + "GET"
-                                + "\n" + "DELETE"
-                                + "\n" + "LIST");
-                        break;
-                    case "2":
-                        out.println("Manipulação de Professor CONFIRMADA: ");
-                        System.out.println("Manipulação de Professor...");
-                        System.out.println("Selecione um dos Comandos: "
-                                + "\n" + "INSERT"
-                                + "\n" + "UPDATE"
-                                + "\n" + "GET"
-                                + "\n" + "DELETE"
-                                + "\n" + "LIST");
-                        break;
-                    case "3":
+            String objeto = in.readLine();
+            switch(objeto) {
+                case "1":
+                    out.println("Objeto aluno selecionado");
+                    String mensagem = in.readLine();
+                    crudAluno(mensagem, out);
+                    System.out.println("aluno cadastrado");
+                break;
+                
+                case "3":
                         out.println("Manipulação de Escola CONFIRMADA: ");
                         System.out.println("Manipulação de Escola...");
                         System.out.println("Selecione um dos Comandos: "
@@ -93,17 +71,26 @@ public class ServidorMain {
                                 + "\n" + "DELETE"
                                 + "\n" + "LIST");
                         break;
-
-                }
             }
+            
 
+//            while (!msgObjeto.equals("exit")) {
+//                out.println(msgObjeto);
+//
+//                System.out.println("Aguardando mensagem...");
+//                String msgRecebida = in.readLine();
+//                if (msgRecebida == null) {
+//                    System.out.println("Chat encerrado pelo outro usuário.");
+//                    break;
+//                }
+            }
         } catch (Exception e) {
             System.out.println("Deu exception");
             e.printStackTrace();
         }
     }
 
-    public static void crudAluno(String dadosAluno) {
+    public static void crudAluno(String dadosAluno, PrintWriter out) {
 
         //separa a mensagem = "insert"; cpf; nome; endereço; turma 
         String[] parteMensagem = dadosAluno.split(";");
@@ -120,7 +107,8 @@ public class ServidorMain {
                 String turma = parteMensagem[4].trim();
                 Aluno aluno = new Aluno(cpf, nome, endereco, turma);
                 alunoRepositorio.add(aluno);
-                break;
+                System.out.println("cheguei aqui"+aluno.toString());
+               break;
 
             case "UPDATE":
 
@@ -133,7 +121,10 @@ public class ServidorMain {
 
                 break;
             case "LIST":
-
+                List<Aluno> alunos = alunoRepositorio.listarTodosAlunos();
+                for (Aluno a : alunos) {
+                    out.println(a.toString());
+                }
                 break;
         }
     }

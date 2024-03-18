@@ -130,12 +130,13 @@ public class ServidorMain {
                 
             case "DELETE":
                 String cpfdel = parteMensagem[1].trim();
-                if(alunoRepositorio.listarTodosAlunos().isEmpty())
-                    out.println("Sem alunos cadastrados");
+               
+                if(alunoRepositorio.listarTodosAlunos().isEmpty()){
+                    out.println("Sem alunos cadastrados");}else{
                 boolean del = alunoRepositorio.excluir(cpfdel);
-                if (del)
+                if (del){
                     out.println("Aluno removido com sucesso");
-                out.println("Aluno nao encontrado");
+                }else{out.println("Aluno nao encontrado");}}
                 break;
                 
             case "LIST":

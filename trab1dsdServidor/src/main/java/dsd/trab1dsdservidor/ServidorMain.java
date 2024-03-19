@@ -38,21 +38,27 @@ public class ServidorMain {
         scan.useDelimiter("\n");
 
         Socket conexao = null;
-        String finaliza = "";
+        String enderecoCliente = "";
        
         try {
             //aguarda conexao
             System.out.println("Servidor iniciado, aguardando conexao");
             conexao = servidor.accept();
+            enderecoCliente = conexao.getInetAddress().getHostAddress();
+
             //conecta
-            System.out.println("Conexao recebida");
+            System.out.println("Conexao recebida: "+enderecoCliente);
             //entra em modo conversa 
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
 
-            while (!finaliza.equals("exit")){
+           
             //le qual objeto quer manipular - 1 aluno, 2 professor, 3 escola
             String objeto = in.readLine();
+            if (objeto.equals("exit")) {
+                System.out.println("Cliente: "+enderecoCliente+" solicitou encerramento da conexão.");
+            }
+
             switch(objeto) {
                 case "1":
                     out.println("Objeto aluno selecionado");
@@ -82,7 +88,7 @@ public class ServidorMain {
 //                    System.out.println("Chat encerrado pelo outro usuário.");
 //                    break;
 //                }
-            }
+            
         } catch (Exception e) {
             System.out.println("Deu exception");
             e.printStackTrace();

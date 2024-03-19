@@ -40,17 +40,18 @@ public class ClienteMain {
                 //System.out.println("Mensgem recebida: " + msgRecebida);
                 
                 System.out.println("Qual objeto voce gostaria de manipular?" + "\n" + "1 - Aluno" +
-                "\n" + "2 - Professor"+ "\n" + "3 - Escola");
+                "\n" + "2 - Professor"+ "\n" + "3 - Escola"+ "\n" +"Exit - para encerrar");
 //                System.out.println("Digite: 1 - para manipular Aluno, 2 - para manipular Professor, 3 - para manipular Escola");
 //                System.out.println("Digite 'exit' para sair");
 //                
                 String objeto = scan.nextLine();
 
-//                if(msgEnviar.equals("exit")){
-//                    System.out.println("Conexão Encerrada...");
-//                    break;
-//                }
-//                out.println(msgEnviar);  
+                if (objeto.equals("exit")) {
+                    out.println(objeto);
+                    System.out.println("Conexão encerrada.");
+                    conexao.close();
+                    return;
+                } 
 
             switch (objeto) {
                 case "1":
@@ -63,7 +64,7 @@ public class ClienteMain {
             }
 
             }
-        } catch(Exception e) {
+        } catch(IOException e) {
             System.out.println("Deu Exception");
             e.printStackTrace();
         } finally {

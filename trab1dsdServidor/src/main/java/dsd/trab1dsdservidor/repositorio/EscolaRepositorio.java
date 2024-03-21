@@ -22,33 +22,37 @@ public class EscolaRepositorio {
         listaEscola.add(escola);
     }
     
-    public void excluir(int id){
+    public boolean excluir(int id){
         for(Escola escola : listaEscola){
             if(escola.getID() == id){
                 listaEscola.remove(escola);
+                return true;
             }
         }
+        return false;
     }
     
-    public void editar(int ID, String nome, String reitor, String mascote, int anoFundacao) {
+    public boolean editar(int ID, String nome, String reitor, String mascote, int anoFundacao) {
         for(Escola escola : listaEscola) {
             if(escola.getID() == ID) {
                 escola.setNome(nome);
                 escola.setReitor(reitor);
                 escola.setMascote(mascote);
                 escola.setAnoFundacao(anoFundacao);
+                return true;
             }
         }
+        return false;
     }
     
-    public List<Escola> listar() {
+    public List<Escola> listar() { //Tem que listar todas as escolas e todos os alunos e professores associados a ela
         return listaEscola;
     }
     
-    public Escola get(int ID){
+    public String get(int ID){
         for(Escola escola : listaEscola) {
             if(escola.getID() == ID) {
-                return escola; 
+                return escola.toString(); 
             }
         }
         return null;

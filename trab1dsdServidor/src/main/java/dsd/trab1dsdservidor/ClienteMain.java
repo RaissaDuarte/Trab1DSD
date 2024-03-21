@@ -26,7 +26,7 @@ public class ClienteMain {
         
         try {
             
-            conexao = new Socket("10.15.120.73", 6543);
+            conexao = new Socket("10.15.120.2", 6543);
             System.out.println("Conexao estabelecida");
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
@@ -61,6 +61,12 @@ public class ClienteMain {
                     crudAluno(out, scan);
                     System.out.println(in.readLine());                    
                 break;
+                case "3":
+                    out.println(objeto);
+                    String retornoEscola = in.readLine();
+                    System.out.println(retornoEscola);
+                    crudEscola(out, scan);
+                    System.out.println(in.readLine());
             }
 
             }
@@ -129,6 +135,70 @@ public class ClienteMain {
                 
                 
                     
+            } 
+    }
+    
+    public static void crudEscola(PrintWriter out, Scanner scan){
+        System.out.println("Selecione o que voce deseja fazer: " + "\n" + "1 - INSERT"
+                                + "\n" + "2 - UPDATE"
+                                + "\n" + "3 - GET"
+                                + "\n" + "4 - DELETE"
+                                + "\n" + "5 - LIST" 
+                                + "\n" + "6 - VINCULAR PESSOA");
+        
+        String respostaCliente = scan.nextLine();
+        
+            switch (respostaCliente){
+                case "1":
+                    System.out.println("Insira o ID");
+                    String id = scan.nextLine();
+                    System.out.println("Insira o nome");
+                    String nome = scan.nextLine();
+                    System.out.println("Insira o reitor");
+                    String reitor = scan.nextLine();
+                    System.out.println("Insira o mascote");
+                    String mascote = scan.nextLine();
+                    System.out.println("Insira o ano de fundação");
+                    String anoFundacao = scan.nextLine();
+                    out.println("INSERT;"+id+";"+nome+";"+reitor+";"+mascote+";"+anoFundacao);
+                break;
+                
+                case "2":
+                    System.out.println("Insira o ID da Escola que voce quer alterar");
+                    String idUp = scan.nextLine();
+                    System.out.println("Insira o novo nome");
+                    String nomeUp = scan.nextLine();
+                    System.out.println("Insira o novo reitor");
+                    String reitorUp = scan.nextLine();
+                    System.out.println("Insira o novo mascote");
+                    String mascoteUp = scan.nextLine();
+                    System.out.println("Insira o novo ano de fundação");
+                    String anoFundacaoUp = scan.nextLine();
+                    out.println("UPDATE;"+idUp+";"+nomeUp+";"+reitorUp+";"+mascoteUp+";"+anoFundacaoUp);
+                break;
+                
+                case "3":
+                    System.out.println("Digite o id da escola que voce deseja pesquisar");
+                    String idGet = scan.nextLine();
+                    out.println("GET;"+idGet);
+                break;
+                
+                case "4": 
+                    System.out.println("Insira o id da escola que voce deseja excluir");
+                    String idDel = scan.nextLine();
+                    out.println("DELETE;"+idDel);
+                break;
+                
+                case "5":
+                    out.println("LIST");
+                break;
+                
+                case "6":
+                    //Verifica se existe a escola a ser vinculado
+                    //verifica se existe pessoa a ser vinculada
+                    //Verifica se essa pessoa já está vinculada da essa escola
+                    //Vincula
+                    break;                    
             } 
     }
 }

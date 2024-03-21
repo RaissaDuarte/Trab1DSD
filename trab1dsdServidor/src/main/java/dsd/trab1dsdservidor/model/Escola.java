@@ -62,6 +62,10 @@ public class Escola {
     public void setAnoFundacao(int anoFundacao) {
         this.anoFundacao = anoFundacao;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Escola{" + "ID=" + ID + ", nome=" + nome + ", reitor=" + reitor + ", mascote=" + mascote + ", anoFundacao=" + anoFundacao + '}';
+    }
     
 }

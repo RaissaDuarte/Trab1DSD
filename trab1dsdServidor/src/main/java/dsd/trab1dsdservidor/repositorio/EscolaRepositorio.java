@@ -18,8 +18,14 @@ public class EscolaRepositorio {
         listaEscola = new ArrayList<>();
     }
     
-    public void add(Escola escola){
+    public boolean add(Escola escola){
+        for(Escola escolaListada : listaEscola) {
+            if(escola.getID() == escolaListada.getID()) {
+                return false;
+            }
+        }
         listaEscola.add(escola);
+        return true;
     }
     
     public boolean excluir(int id){
@@ -45,8 +51,17 @@ public class EscolaRepositorio {
         return false;
     }
     
-    public List<Escola> listar() { //Tem que listar todas as escolas e todos os alunos e professores associados a ela
-        return listaEscola;
+    public String listar() { //Tem que listar todas as escolas e todos os alunos e professores associados a ela
+        if(listaEscola.isEmpty()) {
+            return "0"; 
+        }
+        String numeroEscolas = String.valueOf(listaEscola.size());
+        String escolasListadas = "";
+        for(Escola escola : listaEscola ) {
+            escolasListadas += escola.toString();
+        }
+        String msgFinal = numeroEscolas + escolasListadas; 
+        return msgFinal;
     }
     
     public String get(int ID){

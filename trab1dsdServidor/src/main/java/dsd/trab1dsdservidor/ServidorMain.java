@@ -167,10 +167,14 @@ public class ServidorMain {
                 String mascote = parteMensagem[4].trim();
                 int anoFundacao = Integer.parseInt(parteMensagem[5].trim());
                 Escola escola = new Escola(id, nome, reitor, mascote, anoFundacao);
-                escolaRepositorio.add(escola);
-                out.println("Escola cadastrada com sucesso: " + escola.toString());
+                boolean addEscola = escolaRepositorio.add(escola);
+                if(addEscola) {
+                    out.println("Escola adicionada com sucesso: " + escola.toString());
+                } else {
+                    out.println("*** ID da Escola já cadastrado ***");
+                }
                 break;
-
+                
             case "UPDATE":                
                 int iduUp = Integer.parseInt(parteMensagem[1].trim());
                 String nomeUp = parteMensagem[2].trim();
@@ -213,14 +217,12 @@ public class ServidorMain {
 
             case "LIST":
                 out.println(escolaRepositorio.listar());
-                System.out.println(escolaRepositorio.listar());
                 break;
                 
             case "VINCULAR PESSOA":
                 out.println(escolaRepositorio.listar());
                 System.out.println(escolaRepositorio.listar());
                 break;
-                
                 
         }
     }

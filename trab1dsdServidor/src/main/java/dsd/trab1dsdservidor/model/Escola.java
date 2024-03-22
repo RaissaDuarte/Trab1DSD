@@ -65,7 +65,7 @@ public class Escola {
 
     @Override
     public String toString() {
-        return "Escola{" + "ID=" + ID + ", nome=" + nome + ", reitor=" + reitor + ", mascote=" + mascote + ", anoFundacao=" + anoFundacao + '}';
+        return ID + ";" + nome + ";" + reitor + ";" + mascote + ";" + anoFundacao + "\n";
     }
     
 }

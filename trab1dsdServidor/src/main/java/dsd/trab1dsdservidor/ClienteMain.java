@@ -26,62 +26,57 @@ public class ClienteMain {
         
         try {
             
-            conexao = new Socket("10.15.120.2", 6543);
+            
+            System.out.println("Olá, seja bem vindo!!!");
+           while (true) {
+                
+            conexao = new Socket("10.15.120.73", 6543);
             System.out.println("Conexao estabelecida");
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
             
-            System.out.println("Olá, seja bem vindo!!!");
-            while (true) {
-                
-//                System.out.println("Aguardando mensagem...");
-                //String msgRecebida = in.readLine();
-                
-                //System.out.println("Mensgem recebida: " + msgRecebida);
-                
                 System.out.println("Qual objeto voce gostaria de manipular?" + "\n" + "1 - Aluno" +
-                "\n" + "2 - Professor"+ "\n" + "3 - Escola"+ "\n" +"Exit - para encerrar");
-//                System.out.println("Digite: 1 - para manipular Aluno, 2 - para manipular Professor, 3 - para manipular Escola");
-//                System.out.println("Digite 'exit' para sair");
-//                
-                String objeto = scan.nextLine();
+                "\n" + "2 - Professor"+ "\n" + "3 - Escola");
 
-                if (objeto.equals("exit")) {
-                    out.println(objeto);
-                    System.out.println("Conexão encerrada.");
-                    conexao.close();
-                    return;
-                } 
+                String objeto = scan.nextLine();
 
             switch (objeto) {
                 case "1":
+                    
                     out.println(objeto);
                     String retorno = in.readLine();
                     System.out.println(retorno);
                     crudAluno(out, scan);
-                    System.out.println(in.readLine());                    
+                    System.out.println(in.readLine());       
+                    conexao.close();
                 break;
+                case"2":
+                    out.println(objeto);
+                    String retornoProfessor = in.readLine();
+                    System.out.println(retornoProfessor);
+                    crudProfessor(out, scan);
+                    System.out.println(in.readLine());
+                    conexao.close();
+                break;    
+
                 case "3":
                     out.println(objeto);
                     String retornoEscola = in.readLine();
                     System.out.println(retornoEscola);
                     crudEscola(out, scan);
                     System.out.println(in.readLine());
+                    conexao.close();
+                break;
             }
 
             }
         } catch(IOException e) {
             System.out.println("Deu Exception");
             e.printStackTrace();
-        } finally {
-            if (conexao != null){
-                conexao.close();
-                System.out.println("Socket Encerrado...");
-            }
-        }
-        
-        
+        } 
     }
+
+//--------------------------------------------------------------------------------------------------------------------------
     
     public static void crudAluno(PrintWriter out, Scanner scan){
         System.out.println("Selecione o que voce deseja fazer: " + "\n" + "1 - INSERT"
@@ -133,8 +128,63 @@ public class ClienteMain {
                     out.println("LIST");
                 break;
                 
+            } 
+    }
+    
+    
+    public static void crudProfessor(PrintWriter out, Scanner scan){
+        System.out.println("Selecione o que voce deseja fazer: " + "\n" + "1 - INSERT"
+                                + "\n" + "2 - UPDATE"
+                                + "\n" + "3 - GET"
+                                + "\n" + "4 - DELETE"
+                                + "\n" + "5 - LIST");
+        
+        String respostaCliente = scan.nextLine();
+        
+            switch (respostaCliente){
+                case "1":
+                    System.out.println("Insira o CPF");
+                    String cpf = scan.nextLine();
+                    System.out.println("Insira o nome");
+                    String nome = scan.nextLine();
+                    System.out.println("Insira o endereço");
+                    String endereco = scan.nextLine();
+                    System.out.println("Insira o salario");
+                    String salario = scan.nextLine();
+                    System.out.println("Insira a materia");
+                    String materia = scan.nextLine();
+                    out.println("INSERT;"+cpf+";"+nome+";"+endereco+";"+salario+";"+materia);
+                break;
                 
-                    
+                case "2":
+                    System.out.println("Insira o CPF do professor que voce quer alterar");
+                    String cpfup = scan.nextLine();
+                    System.out.println("Insira o novo nome");
+                    String nomeup = scan.nextLine();
+                    System.out.println("Insira o novo endereço");
+                    String enderecoup = scan.nextLine();
+                    System.out.println("Insira o novo salário");
+                    String salarioup = scan.nextLine();
+                    System.out.println("Insira a nova materia");
+                    String materiaup = scan.nextLine();
+                    out.println("UPDATE;"+cpfup+";"+nomeup+";"+enderecoup+";"+salarioup+";"+materiaup);
+                break;
+                
+                case "3":
+                    System.out.println("Digite o cpf do professor que voce deseja pesquisar");
+                    String cpfget = scan.nextLine();
+                    out.println("GET;"+cpfget);
+                break;
+                
+                case "4": 
+                    System.out.println("Insira o cpf do professor que voce deseja excluir");
+                    String cpfdel = scan.nextLine();
+                    out.println("DELETE;"+cpfdel);
+                break;
+                
+                case "5":
+                    out.println("LIST");
+                break;                    
             } 
     }
     

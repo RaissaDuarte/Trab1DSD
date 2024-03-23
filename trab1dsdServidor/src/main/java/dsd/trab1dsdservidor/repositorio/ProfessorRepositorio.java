@@ -19,35 +19,55 @@ public class ProfessorRepositorio {
         professoresList = new ArrayList<>();
     }
 
-    public void add(Professor professor) {
+    public boolean add(Professor professor) {
+        for (Professor p: professoresList){
+            if(p.getCpf().equals(professor.getCpf())){
+                return false;
+            }
+        }
         professoresList.add(professor);
+        return true;
     }
 
-    public void excluir(String cpf) {
+    public boolean excluir(String cpf) {
         for (int i = 0; i < professoresList.size(); i++) {
             if (professoresList.get(i).getCpf().equals(cpf)) {
                 professoresList.remove(i);
-                return;
+                return true;
             }
-        }
+        }return false;
     }
 
-    public void editar(String cpf, String novoNome, String novoEndereco, double novoSalario, String novaMateria) {
+    public boolean editar(String cpf, String novoNome, String novoEndereco, double novoSalario, String novaMateria) {
         for (Professor professor : professoresList) {
             if (professor.getCpf().equals(cpf)) {
                 professor.setNome(novoNome);
                 professor.setEndereco(novoEndereco);
                 professor.setSalario(novoSalario);
                 professor.setMateria(novaMateria);
-                return;
+                return true;
             }
-        }
+        }return false;
     }
 
-    public List<Professor> listarTodosProfessores() {
+    public String listarTodosProfessores() {
+        int contarProfessores = professoresList.size();
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(contarProfessores).append("[ ");
+
+        for (Professor professor : professoresList) {
+            builder.append(professor.toString()).append("  |||  "); 
+        }
+
+        builder.append("]");
+
+        return builder.toString();
+    }
+
+    public List<Professor> getList(){
         return professoresList;
     }
-
     public String get(String cpf) {
         for (Professor professor : professoresList) {
             if (professor.getCpf().equals(cpf)) {

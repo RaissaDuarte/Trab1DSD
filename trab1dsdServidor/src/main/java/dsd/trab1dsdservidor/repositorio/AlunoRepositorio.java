@@ -19,8 +19,14 @@ public class AlunoRepositorio {
         alunoslist = new ArrayList<>();
     }
 
-    public void add(Aluno aluno) {
+    public boolean add(Aluno aluno) {
+        for (Aluno a: alunoslist){
+            if(aluno.getCpf().equals(a.getCpf())){
+                return false;
+            }
+        }
         alunoslist.add(aluno);
+        return true;
     }
 
     public boolean excluir(String cpf) {
@@ -44,10 +50,21 @@ public class AlunoRepositorio {
         }return false;
     }
 
-    public List<Aluno> listarTodosAlunos() {
-        return alunoslist;
+    public String listarTodosAlunos() {
+        int contarAlunos = alunoslist.size();
+        StringBuilder builder = new StringBuilder();
+        builder.append(contarAlunos).append(" [[ ");
+
+        for (Aluno a: alunoslist){
+            builder.append(a.toString()).append("  |||  ");
+        }
+        builder.append(" ]]");
+        return (builder.toString());
     }
 
+    public List<Aluno> getList(){
+        return alunoslist;
+    }
     public String get(String cpf) {
         for (Aluno aluno : alunoslist) {
             if (aluno.getCpf().equals(cpf)) {

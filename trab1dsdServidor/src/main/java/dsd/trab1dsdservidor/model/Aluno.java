@@ -26,7 +26,7 @@ public class Aluno extends Pessoa {
 
     @Override
     public String toString() {
-        return super.toString() + " | Turma: " + turma;
+        return super.toString() + "; Turma: " + turma;
     }
 
     

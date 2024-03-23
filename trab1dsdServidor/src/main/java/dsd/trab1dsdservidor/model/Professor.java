@@ -41,7 +41,7 @@ public class Professor extends Pessoa{
     
     @Override
     public String toString() {
-        return super.toString() + " | Salário: " + salario + "; Materia: "+ materia; 
+        return super.toString() + "; Salário: " + salario + "; Matéria: "+ materia; 
     }
     
     

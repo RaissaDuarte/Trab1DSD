@@ -6,8 +6,10 @@ package dsd.trab1dsdservidor;
 import dsd.trab1dsdservidor.model.Aluno;
 import dsd.trab1dsdservidor.model.Pessoa;
 import dsd.trab1dsdservidor.model.Escola;
+import dsd.trab1dsdservidor.model.Professor;
 import dsd.trab1dsdservidor.repositorio.AlunoRepositorio;
 import dsd.trab1dsdservidor.repositorio.EscolaRepositorio;
+import dsd.trab1dsdservidor.repositorio.ProfessorRepositorio;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,6 +29,7 @@ public class ServidorMain {
     public static void main(String[] args) throws IOException {
 
         AlunoRepositorio alunoRepositorio = new AlunoRepositorio();
+        ProfessorRepositorio professorRepositorio = new ProfessorRepositorio();
         EscolaRepositorio escolaRepositorio = new EscolaRepositorio();
 
         //inicia servidor 
@@ -42,7 +45,7 @@ public class ServidorMain {
 
         try {
             //aguarda conexao
-            System.out.println("Servidor iniciado, aguardando conexao");
+            System.out.println("Servidor iniciado, aguardando conexões");
             conexao = servidor.accept();
             enderecoCliente = conexao.getInetAddress().getHostAddress();
 
@@ -52,19 +55,22 @@ public class ServidorMain {
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
 
-            while (!finaliza.equals("exit")) {
+            while (conexao != null) {
                 //le qual objeto quer manipular - 1 aluno, 2 professor, 3 escola
                 String objeto = in.readLine();
-//            if (objeto.equals("exit")) {
-//                System.out.println("Cliente: "+enderecoCliente+" solicitou encerramento da conexão.");
-//            }
 
                 switch (objeto) {
                     case "1":
                         out.println("Objeto aluno selecionado");
                         String mensagem = in.readLine();
                         crudAluno(mensagem, out, alunoRepositorio);
-                        break;
+                    break;
+                        
+                    case "2":
+                        out.println("Objeto professor selecionado");
+                        String mensagemProf = in.readLine();
+                        crudProfessor(mensagemProf, out, professorRepositorio);
+                    break; 
 
                     case "3":
                         out.println("Manipulação de Escola CONFIRMADA: ");
@@ -73,6 +79,7 @@ public class ServidorMain {
                         break;
                 }
             }
+            System.out.println("Conexao encerrada com cliente: "+enderecoCliente );
 
 //            while (!msgObjeto.equals("exit")) {
 //                out.println(msgObjeto);
@@ -84,7 +91,7 @@ public class ServidorMain {
 //                    break;
 //                }
         } catch (Exception e) {
-            System.out.println("Deu exception");
+            System.out.println("Deu exception no try");
             e.printStackTrace();
         }
     }
@@ -103,8 +110,12 @@ public class ServidorMain {
                 String endereco = parteMensagem[3].trim();
                 String turma = parteMensagem[4].trim();
                 Aluno aluno = new Aluno(cpf, nome, endereco, turma);
-                alunoRepositorio.add(aluno);
-                out.println("Aluno cadastrado com sucesso: " + aluno.toString());
+                boolean add = alunoRepositorio.add(aluno);
+                if(add == true) {
+                    out.println("Aluno cadastrado com sucesso: " + aluno.toString());
+                } else {
+                    out.println("*** CPF de aluno ja cadastrado ***");
+                }
                 break;
 
             case "UPDATE":
@@ -133,7 +144,7 @@ public class ServidorMain {
             case "DELETE":
                 String cpfdel = parteMensagem[1].trim();
 
-                if (alunoRepositorio.listarTodosAlunos().isEmpty()) {
+                if (alunoRepositorio.getList().isEmpty()) {
                     out.println("Sem alunos cadastrados");
                 } else {
                     boolean del = alunoRepositorio.excluir(cpfdel);
@@ -147,14 +158,84 @@ public class ServidorMain {
 
             case "LIST":
                 out.println(alunoRepositorio.listarTodosAlunos());
-                System.out.println(alunoRepositorio.listarTodosAlunos());
+                break;
+        }
+    }
+    
+    
+    public static void crudProfessor(String dadosProfessor, PrintWriter out, ProfessorRepositorio professorRepositorio) {
+
+        //separa a mensagem = "insert";  cpf,  nome,  endereco, double salario, String materia
+        String[] parteMensagem = dadosProfessor.split(";");
+
+        String comando = parteMensagem[0].trim();
+
+        switch (comando) {
+            case "INSERT":
+                String cpf = parteMensagem[1].trim();
+                String nome = parteMensagem[2].trim();
+                String endereco = parteMensagem[3].trim();
+                String sal = parteMensagem[4].trim();
+                double salario = Double.parseDouble(sal);
+                String materia = parteMensagem[5].trim();
+                Professor professor = new Professor(cpf, nome, endereco, salario, materia);
+                boolean addProfessor = professorRepositorio.add(professor);
+                if(addProfessor == true) {
+                    out.println("Professor cadastrado com sucesso: " + professor.toString());
+                } else {
+                    out.println("*** CPF de professor ja cadastrado ***");
+                }
+                break;
+
+
+            case "UPDATE":
+                String cpfup = parteMensagem[1].trim();
+                String nomeup = parteMensagem[2].trim();
+                String enderecoup = parteMensagem[3].trim();
+                String salup = parteMensagem[4].trim();
+                double salarioup = Double.parseDouble(salup);
+                String materiaup = parteMensagem[5].trim();
+                boolean update = professorRepositorio.editar(cpfup, nomeup, enderecoup, salarioup, materiaup);
+                if (update) {
+                    out.println("Aluno atualizado com sucesso");
+                } else {
+                    out.println("*** Aluno não encontrado ***");
+                }
+                break;
+
+            case "GET":
+                String cpfget = parteMensagem[1].trim();
+                String p = professorRepositorio.get(cpfget);
+                out.println(p);
+                if (professorRepositorio.listarTodosProfessores().isEmpty()) {
+                    out.println("Sem professores cadastrados");
+                }
+                out.println("*** Professor nao encontrado ***");
+                break;
+
+            case "DELETE":
+                String cpfdel = parteMensagem[1].trim();
+
+                if (professorRepositorio.getList().isEmpty()) {
+                    out.println("Sem professores cadastrados");
+                } else {
+                    boolean del = professorRepositorio.excluir(cpfdel);
+                    if (del) {
+                        out.println("Professor removido com sucesso");
+                    } else {
+                        out.println("*** Professor nao encontrado ***");
+                    }
+                }
+                break;
+
+            case "LIST":
+                out.println(professorRepositorio.listarTodosProfessores());
                 break;
         }
     }
     
     public static void crudEscola(String dadosEscola, PrintWriter out, EscolaRepositorio escolaRepositorio) {
 
-        //separa a mensagem = "insert"; cpf; nome; endereço; turma 
         String[] parteMensagem = dadosEscola.split(";");
 
         String comando = parteMensagem[0].trim();

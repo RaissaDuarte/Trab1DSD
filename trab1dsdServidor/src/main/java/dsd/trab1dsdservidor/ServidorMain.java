@@ -309,7 +309,11 @@ public class ServidorMain {
                 if(!vinculoPessoa) {
                     out.println("*** IdEcola ou CPF Aluno/ Professor não encontrado ***");
                 }
-                break;                                
+                break; 
+                
+            case "LIST-VINCULADOS":
+                out.println(escolaRepositorio.listarVinculados());
+                break;
         }
     }
 }

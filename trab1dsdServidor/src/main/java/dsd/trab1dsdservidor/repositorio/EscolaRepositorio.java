@@ -113,4 +113,24 @@ public class EscolaRepositorio {
     public List<Escola> getList() {
         return listaEscola;
     }
+
+    public String listarVinculados() { //Tem que listar todas as escolas e todos os alunos e professores associados a ela
+        if (listaEscola.isEmpty()) {
+            return "0";
+        }
+        String escolasListadas = "";
+        for (Escola escola : listaEscola) {
+            escolasListadas += escola.toString();
+            if (escola.getListaProfessores() == null) {
+                for (Professor professor : professorRepositorio.getList()) {
+                    escolasListadas += professor.toString();
+                }
+            } else if (escola.getListaAlunos() != null) {
+                for (Aluno aluno : alunoRepositorio.getList()) {
+                    escolasListadas += aluno.toString();
+                }
+            }
+        }
+        return escolasListadas;
+    }
 }

@@ -4,6 +4,10 @@
  */
 package dsd.trab1dsdservidor.model;
 
+import dsd.trab1dsdservidor.model.Aluno;
+import dsd.trab1dsdservidor.model.Professor;
+import java.util.List;
+
 /**
  *
  * @author 09562388905
@@ -14,6 +18,8 @@ public class Escola {
     private String reitor;
     private String mascote;
     private int anoFundacao;
+    private List<Professor> listaProfessores;
+    private List<Aluno> listaAlunos;
 
     public Escola(int ID, String nome, String reitor, String mascote, int anoFundacao) {
         this.ID = ID;
@@ -30,7 +36,7 @@ public class Escola {
     public void setID(int ID) {
         this.ID = ID;
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -63,9 +69,33 @@ public class Escola {
         this.anoFundacao = anoFundacao;
     }
 
+    public List<Professor> getListaProfessores() {
+        return listaProfessores;
+    }
+
+    public void setListaProfessores(List<Professor> listaProfessores) {
+        this.listaProfessores = listaProfessores;
+    }
+    
+    public void addProfessor(Professor professor){
+        listaProfessores.add(professor);
+    }
+
+    public List<Aluno> getListaAlunos() {
+        return listaAlunos;
+    }
+
+    public void setListaAlunos(List<Aluno> listaAlunos) {
+        this.listaAlunos = listaAlunos;
+    }
+    
+    public void addAluno(Aluno aluno){
+        listaAlunos.add(aluno);
+    }
+
     @Override
     public String toString() {
-        return ID + ";" + nome + ";" + reitor + ";" + mascote + ";" + anoFundacao + "\n";
+        return ID + ";" + nome + ";" + reitor + ";" + mascote + ";" + anoFundacao;
     }
     
 }

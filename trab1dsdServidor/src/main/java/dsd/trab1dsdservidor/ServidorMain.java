@@ -251,9 +251,7 @@ public class ServidorMain {
                 int anoFundacao = Integer.parseInt(parteMensagem[5].trim());
                 Escola escola = new Escola(id, nome, reitor, mascote, anoFundacao);
                 boolean addEscola = escolaRepositorio.add(escola);
-                if(addEscola) {
-                    out.println("Escola adicionada com sucesso: " + escola.toString());
-                } else {
+                if(!addEscola) {
                     out.println("*** ID da Escola já cadastrado ***");
                 }
                 break;
@@ -276,11 +274,13 @@ public class ServidorMain {
             case "GET":
                 int idGet = Integer.parseInt(parteMensagem[1].trim());
                 String escolaDados = escolaRepositorio.get(idGet);
-                out.println(escolaDados);
                 if (escolaRepositorio.listar().isEmpty()) {
                     out.println("Sem Escolas cadastradas");
+                } else if (escolaDados == null){
+                    out.println("*** Escola não encontrada ***");
+                } else {
+                    out.println(escolaDados);
                 }
-                out.println("*** Escola não encontrada ***");
                 break;
 
             case "DELETE":
@@ -303,10 +303,13 @@ public class ServidorMain {
                 break;
                 
             case "VINCULAR PESSOA":
-                out.println(escolaRepositorio.listar());
-                System.out.println(escolaRepositorio.listar());
-                break;
-                
+                int idEscola = Integer.parseInt(parteMensagem[1].trim());
+                String cpf = parteMensagem[2].trim();
+                boolean vinculoPessoa = escolaRepositorio.vincularPessoa(idEscola, cpf);
+                if(!vinculoPessoa) {
+                    out.println("*** IdEcola ou CPF Aluno/ Professor não encontrado ***");
+                }
+                break;                                
         }
     }
 }

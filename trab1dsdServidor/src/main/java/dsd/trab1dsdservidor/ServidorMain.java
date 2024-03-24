@@ -44,6 +44,7 @@ public class ServidorMain {
         String finaliza = "";
 
         try {
+          while(true){
             //aguarda conexao
             System.out.println("Servidor iniciado, aguardando conexões");
             conexao = servidor.accept();
@@ -55,7 +56,7 @@ public class ServidorMain {
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
 
-            while (conexao != null) {
+            //while (conexao != null) {
                 //le qual objeto quer manipular - 1 aluno, 2 professor, 3 escola
                 String objeto = in.readLine();
 
@@ -78,8 +79,9 @@ public class ServidorMain {
                         crudEscola(mensagemEscola, out, escolaRepositorio);
                         break;
                 }
-            }
-            System.out.println("Conexao encerrada com cliente: "+enderecoCliente );
+                conexao.close();
+                System.out.println("Conexao encerrada com cliente: "+enderecoCliente );
+         }
 
 //            while (!msgObjeto.equals("exit")) {
 //                out.println(msgObjeto);
@@ -90,7 +92,7 @@ public class ServidorMain {
 //                    System.out.println("Chat encerrado pelo outro usuário.");
 //                    break;
 //                }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Deu exception no try");
             e.printStackTrace();
         }

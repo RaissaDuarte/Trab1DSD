@@ -29,16 +29,18 @@ public class ClienteMain {
             
             System.out.println("Olá, seja bem vindo!!!");
            while (true) {
+                System.out.println("Qual objeto voce gostaria de manipular?" + "\n" + "1 - Aluno" +
+                "\n" + "2 - Professor"+ "\n" + "3 - Escola");
+
+                String objeto = scan.nextLine();
+                
                 
             conexao = new Socket("10.15.120.73", 6543);
             System.out.println("Conexao estabelecida");
             PrintWriter out = new PrintWriter(conexao.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
             
-                System.out.println("Qual objeto voce gostaria de manipular?" + "\n" + "1 - Aluno" +
-                "\n" + "2 - Professor"+ "\n" + "3 - Escola");
-
-                String objeto = scan.nextLine();
+                
 
             switch (objeto) {
                 case "1":

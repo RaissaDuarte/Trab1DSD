@@ -250,7 +250,12 @@ public class ClienteMain {
                     //verifica se existe pessoa a ser vinculada
                     //Verifica se essa pessoa já está vinculada da essa escola
                     //Vincula
-                    break;                    
+                    System.out.println("Insira o ID Escola");
+                    String idEscola = scan.nextLine();
+                    System.out.println("Insira o CPF da Pessoa(Aluno/Professor)");
+                    String cpf = scan.nextLine();
+                    out.println("VINCULAR-PESSOA;"+idEscola+";"+cpf);
+                break;                    
             } 
     }
 }

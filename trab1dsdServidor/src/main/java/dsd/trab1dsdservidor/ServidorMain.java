@@ -302,7 +302,7 @@ public class ServidorMain {
                 out.println(escolaRepositorio.listar());
                 break;
                 
-            case "VINCULAR PESSOA":
+            case "VINCULAR-PESSOA":
                 int idEscola = Integer.parseInt(parteMensagem[1].trim());
                 String cpf = parteMensagem[2].trim();
                 boolean vinculoPessoa = escolaRepositorio.vincularPessoa(idEscola, cpf);

@@ -6,6 +6,7 @@ package dsd.trab1dsdservidor.model;
 
 import dsd.trab1dsdservidor.model.Aluno;
 import dsd.trab1dsdservidor.model.Professor;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +28,8 @@ public class Escola {
         this.reitor = reitor;
         this.mascote = mascote;
         this.anoFundacao = anoFundacao;
+        this.listaAlunos = new ArrayList<>();
+        this.listaProfessores = new ArrayList<>();
     }
 
     public int getID() {
@@ -95,7 +98,7 @@ public class Escola {
 
     @Override
     public String toString() {
-        return ID + ";" + nome + ";" + reitor + ";" + mascote + ";" + anoFundacao;
+        return ID + ";" + nome + ";" + reitor + ";" + mascote + ";" + anoFundacao + ";" ;
     }
     
 }

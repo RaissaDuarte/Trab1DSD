@@ -312,7 +312,12 @@ public class ServidorMain {
                 break; 
                 
             case "LIST-VINCULADOS":
-                out.println(escolaRepositorio.listarVinculados());
+                boolean listVinculados = escolaRepositorio.listarVinculados().isBlank();
+                if(listVinculados) {
+                    out.println("*** Nenhuma Escola ou Aluno/Professor encontrado ***");
+                } else {
+                    out.println(escolaRepositorio.listarVinculados());
+                }
                 break;
         }
     }

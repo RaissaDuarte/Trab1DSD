@@ -83,29 +83,33 @@ public class EscolaRepositorio {
     }
 
     public boolean vincularPessoa(int idEscola, String cpf) { //Tem que listar todas as escolas e todos os alunos e professores associados a ela
-        String getEscola = get(idEscola);
+        String getEscola = this.get(idEscola);
+        List<Aluno> listaAlunos = alunoRepositorio.getList();
+        List<Professor> listaProfessores = professorRepositorio.getList();
         if (getEscola.isEmpty()) {
             return false;
         } else {
-            for (Escola escola : getList()) {
+            for (Escola escola : this.getList()) {
                 if (escola.getID() == idEscola) {
-                    if (!alunoRepositorio.get(cpf).isEmpty()) {
-                        for (Aluno aluno : alunoRepositorio.getList()) {
-                            if (aluno.getCpf().equals(cpf)) {
-                                escola.addAluno(aluno);
-                                return true;
-                            }
+                    boolean pessoaEncontrada = false;
+                    for (Aluno aluno : listaAlunos) {
+                        if (aluno.getCpf().equals(cpf)) {
+                            escola.addAluno(aluno);
+                            pessoaEncontrada = true;
                         }
-                    } else if (!professorRepositorio.get(cpf).isEmpty()) {
-                        for (Professor professor : professorRepositorio.getList()) {
-                            if (professor.getCpf().equals(cpf)) {
-                                escola.addProfessor(professor);
-                                return true;
-                            }
+                    }
+                    for (Professor professor : listaProfessores) {
+                        if (professor.getCpf().equals(cpf)) {
+                            escola.addProfessor(professor);
+                            pessoaEncontrada = true;
                         }
+                    }
+                    if (pessoaEncontrada) {
+                        return true;
                     }
                 }
             }
+
         }
         return false;
     }

@@ -196,7 +196,8 @@ public class ClienteMain {
                                 + "\n" + "3 - GET"
                                 + "\n" + "4 - DELETE"
                                 + "\n" + "5 - LIST" 
-                                + "\n" + "6 - VINCULAR PESSOA");
+                                + "\n" + "6 - VINCULAR PESSOA"
+                                + "\n" + "7 - LIST VINCULADOS");
         
         String respostaCliente = scan.nextLine();
         

@@ -89,14 +89,14 @@ public class EscolaRepositorio {
         } else {
             for (Escola escola : getList()) {
                 if (escola.getID() == idEscola) {
-                    if (alunoRepositorio.get(cpf) != null) {
+                    if (!alunoRepositorio.get(cpf).isEmpty()) {
                         for (Aluno aluno : alunoRepositorio.getList()) {
                             if (aluno.getCpf().equals(cpf)) {
                                 escola.addAluno(aluno);
                                 return true;
                             }
                         }
-                    } else if (professorRepositorio.get(cpf) != null) {
+                    } else if (!professorRepositorio.get(cpf).isEmpty()) {
                         for (Professor professor : professorRepositorio.getList()) {
                             if (professor.getCpf().equals(cpf)) {
                                 escola.addProfessor(professor);

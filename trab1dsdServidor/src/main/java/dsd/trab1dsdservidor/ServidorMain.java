@@ -113,7 +113,7 @@ public class ServidorMain {
                 String turma = parteMensagem[4].trim();
                 Aluno aluno = new Aluno(cpf, nome, endereco, turma);
                 boolean add = alunoRepositorio.add(aluno);
-                if(add == true) {
+                if(add) {
                     out.println("Aluno cadastrado com sucesso: " + aluno.toString());
                 } else {
                     out.println("*** CPF de aluno ja cadastrado ***");

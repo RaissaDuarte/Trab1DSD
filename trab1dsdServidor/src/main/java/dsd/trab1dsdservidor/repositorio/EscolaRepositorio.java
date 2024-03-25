@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class EscolaRepositorio {
 
     private List<Escola> listaEscola;
-    ProfessorRepositorio professorRepositorio = new ProfessorRepositorio();
-    AlunoRepositorio alunoRepositorio = new AlunoRepositorio();
+    private ProfessorRepositorio professorRepositorio = new ProfessorRepositorio();
+    private AlunoRepositorio alunoRepositorio = new AlunoRepositorio();
 
     public EscolaRepositorio() {
         listaEscola = new ArrayList<>();
@@ -60,18 +60,21 @@ public class EscolaRepositorio {
         return false;
     }
 
-    public String listar() { //Tem que listar todas as escolas e todos os alunos e professores associados a ela
-        if (listaEscola.isEmpty()) {
-            return "0";
-        }
-        String numeroEscolas = String.valueOf(listaEscola.size());
-        String escolasListadas = "";
+    public String listar() {
+        int contarEscolas = listaEscola.size();
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(contarEscolas).append("[ ");
+
         for (Escola escola : listaEscola) {
-            escolasListadas += escola.toString();
+            builder.append(escola.toString()).append("  |||  ");
         }
-        String msgFinal = numeroEscolas + escolasListadas;
-        return msgFinal;
+
+        builder.append("]");
+
+        return builder.toString();
     }
+
 
     public String get(int ID) {
         for (Escola escola : listaEscola) {
@@ -82,36 +85,30 @@ public class EscolaRepositorio {
         return null;
     }
 
-    public boolean vincularPessoa(int idEscola, String cpf) { //Tem que listar todas as escolas e todos os alunos e professores associados a ela
-        String getEscola = this.get(idEscola);
-        List<Aluno> listaAlunos = alunoRepositorio.getList();
-        List<Professor> listaProfessores = professorRepositorio.getList();
-        if (getEscola.isEmpty()) {
-            return false;
-        } else {
-            for (Escola escola : this.getList()) {
-                if (escola.getID() == idEscola) {
-                    boolean pessoaEncontrada = false;
-                    for (Aluno aluno : listaAlunos) {
-                        if (aluno.getCpf().equals(cpf)) {
-                            escola.addAluno(aluno);
-                            pessoaEncontrada = true;
-                        }
-                    }
-                    for (Professor professor : listaProfessores) {
-                        if (professor.getCpf().equals(cpf)) {
-                            escola.addProfessor(professor);
-                            pessoaEncontrada = true;
-                        }
-                    }
-                    if (pessoaEncontrada) {
-                        return true;
+    public boolean vincularPessoa(int idEscola, String cpf) {
+        Escola escolaSelecionada = new Escola();
+        String msg = "";
+        for (Escola escola : this.getList()) {
+            if (escola.getID() == idEscola) {
+                escolaSelecionada = escola;
+                msg += escolaSelecionada.toString();
+                boolean pessoaEncontrada = false;
+                if (alunoRepositorio.get(cpf) != null) {
+                    msg += alunoRepositorio.get(cpf);
+                    pessoaEncontrada = true;
+                    break; // interrompe o loop, pois a pessoa foi encontrada
+                }
+                if (!pessoaEncontrada) {
+                    if (professorRepositorio.get(cpf) != null) {
+                        msg += professorRepositorio.get(cpf);
                     }
                 }
+                if (pessoaEncontrada) {
+                    return true; // pessoa encontrada e vinculada com sucesso
+                }
             }
-
         }
-        return false;
+        return false; // falha na vinculação
     }
 
     public List<Escola> getList() {

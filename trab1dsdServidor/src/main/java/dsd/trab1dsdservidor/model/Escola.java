@@ -32,6 +32,9 @@ public class Escola {
         this.listaProfessores = new ArrayList<>();
     }
 
+    public Escola() {
+    }
+
     public int getID() {
         return ID;
     }
